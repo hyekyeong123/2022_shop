@@ -29,18 +29,23 @@ public class MemberService implements UserDetailsService {
 
     // 멤버 유효성 검사(중복된 이메일이 있으면 X)
     private void validateDuplicateMember(Member member) {
+
         Member findMember = memberRepository.findByEmail(member.getEmail());
         if(findMember != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
+
     }
 
     // 이메일로 멤버 정보 가져오기(스프링 시큐리티)
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Member findMember = memberRepository.findByEmail(email);
-        if(findMember != null){
-            throw new IllegalStateException("이미 가입된 회원입니다.");
+
+        // 알맞은 멤버를 찾지 못하였다면
+        if(findMember == null){
+            throw new IllegalStateException("알맞은 회원 정보를 찾을 수 없습니다."+email);
         }
 
         return User.builder()

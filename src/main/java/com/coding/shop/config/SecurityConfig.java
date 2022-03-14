@@ -30,9 +30,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 로그아웃
             .and()
             .logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 URL
+            .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")) // 로그아웃 URL
             .logoutSuccessUrl("/"); // 로그아웃 성공시 이동할 URL
+
+        http.authorizeRequests() // 시큐리티 처리에 HttpServletRequest를 이용함
+
+            // 모든 사용자가 인증 없이 경로 접근 가능
+            .mvcMatchers(
+                    "/"
+                    ,"/members/**"
+                    ,"/item/**"
+                    ,"/images/**"
+            ).permitAll()
+
+            .mvcMatchers("/admin/**").hasRole("ADMIN")
+
+            .anyRequest().authenticated(); // 그 밖에는 모두 인증 요구
+
+        // 인증되지 않은 사용자가 리소스에 접근하였을 때 수행되는 핸들러를 등록
+        http.exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
