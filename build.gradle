@@ -46,7 +46,7 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	//querydsl 추가
+	//querydsl 의존성 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
@@ -58,13 +58,17 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.security:spring-security-config'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+	// dto 활용을 위한 modelmapper
+	implementation 'org.modelmapper:modelmapper:3.0.0'
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//querydsl 추가 시작
+// Querydsl이 생성하는 QClass들의 경로를 설정
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
