@@ -33,8 +33,10 @@ public class ItemController {
     // 상품 등록 페이지
     @GetMapping(value="/admin/item/new")
     public String itemRegistrationView(Model model){
-        model.addAttribute("itemFormDto",new ItemFormDto());
-        return "/item/itemForm";
+
+        model.addAttribute("itemFormDto", new ItemFormDto());
+        return "item/itemForm";
+
     }
 
     // 상품 등록 액션
@@ -59,6 +61,7 @@ public class ItemController {
 
         try{
             itemService.saveItem(itemFormDto, itemImgFileList);
+
         }catch (Exception e){
             model.addAttribute("errorMessage","상품 등록 중 에러가 발생하였습니다.");
             return "item/itemForm";
@@ -94,6 +97,17 @@ public class ItemController {
 
         return "item/itemMng";
     }
+
+    // 상품 상세 페이지 보여주기
+    @GetMapping("/item/{itemId}")
+    public String itemDetailView(
+            Model model,
+            @PathVariable Long itemId
+    ){
+        ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+        model.addAttribute("item","itemFormDto");
+        return "item/itemDtl";
+    }
 // END ************************* 상품 조회 관련 : R ************************
 
 
@@ -112,10 +126,10 @@ public class ItemController {
         catch (EntityNotFoundException e){
             model.addAttribute("errorMessage","존재하지 않는 상품입니다.");
             model.addAttribute("itemFormDto",new ItemFormDto());
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
-        return "/item/itemForm";
+        return "item/itemForm";
     }
 
     @PostMapping(value = "/admin/item/{itemId}")

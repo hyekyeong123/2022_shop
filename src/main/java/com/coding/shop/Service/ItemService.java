@@ -3,6 +3,7 @@ package com.coding.shop.Service;
 import com.coding.shop.dto.ItemFormDto;
 import com.coding.shop.dto.ItemImgDto;
 import com.coding.shop.dto.ItemSearchDto;
+import com.coding.shop.dto.MainItemDto;
 import com.coding.shop.entity.Item;
 import com.coding.shop.entity.ItemImg;
 import com.coding.shop.repository.ItemImgRepository;
@@ -79,12 +80,21 @@ public class ItemService {
 
     }
 
-    // 상품 조회 조건과 페이지 정보를 파라미터로 받아서 조회
+    // 관리자 페이지 목록 - 상품 조회 조건과 페이지 정보를 파라미터로 받아서 조회
     @Transactional(readOnly = true)
-    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+    public Page<Item> getAdminItemPage(
+            ItemSearchDto itemSearchDto, Pageable pageable
+    ){
         return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 
+    // 메인 페이지 상품 목록
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> geMainItemPage(
+            ItemSearchDto itemSearchDto, Pageable pageable
+    ){
+        return itemRepository.getMainItemPage(itemSearchDto, pageable);
+    }
 
     // START *************************** 아이템 업데이트 : U *********************************
     public Long updateItem(
