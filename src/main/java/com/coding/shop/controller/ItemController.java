@@ -104,8 +104,9 @@ public class ItemController {
             Model model,
             @PathVariable Long itemId
     ){
+        // itemId = 1
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
-        model.addAttribute("item","itemFormDto");
+        model.addAttribute("item",itemFormDto);
         return "item/itemDtl";
     }
 // END ************************* 상품 조회 관련 : R ************************
