@@ -21,7 +21,7 @@ public class ItemImg extends BaseEntity {
 
     private String imgUrl; //이미지 조회 경로
 
-    private String repimgYn; //대표 이미지 여부
+    private String repImgYn; //대표 이미지 여부
 
     @ManyToOne(fetch = FetchType.LAZY) // 아이템 이미지 : 실제 아이템 정보 = 다 : 일
     @JoinColumn(name = "item_id")

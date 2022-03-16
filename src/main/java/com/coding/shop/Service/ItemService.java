@@ -44,8 +44,8 @@ public class ItemService {
             itemImg.setItem(item);
 
             // 첫번째 이미지일 경우 대표 상품 이미지 여부 값을 "Y"로 세팅
-            if(i == 0) itemImg.setRepimgYn("Y");
-            else itemImg.setRepimgYn("N");
+            if(i == 0) itemImg.setRepImgYn("Y");
+            else itemImg.setRepImgYn("N");
 
             // 아이템이미지 DB에다가 각각 저장
             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));

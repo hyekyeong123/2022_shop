@@ -34,4 +34,25 @@ public class OrderItem extends BaseEntity {
 
     private LocalDateTime regTime;
     private LocalDateTime updateTime;
+
+    // 주문할 상품과 주문 수량을 통해 OrderItem 객체 만들기
+    public static OrderItem createOrderItem(Item item, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice());
+
+        item.removeStock(count); // 재고 정리
+        return orderItem;
+    }
+
+    // 총 가격 = 주문 가격 * 주문 수량
+    public int getTotalPrice(){
+        return orderPrice * count;
+    }
+
+    // 주문취소시 주문했던 수량만큼 재고 +
+    public void cancel(){
+        this.getItem().addStock(count);
+    }
 }
